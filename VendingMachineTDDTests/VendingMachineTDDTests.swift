@@ -13,14 +13,21 @@ class VendingMachine {
         case invalidation
     }
     
+    private var money: Int = 0
+    
     func insertMoney(_ input: Int) throws {
         try validateInsertMoney(input)
+        money += input
     }
     
     func validateInsertMoney(_ input: Int) throws {
         if !(input == 10 || input == 50 || input == 100 || input == 500 || input == 1000) {
             throw InsertError.invalidation
         }
+    }
+    
+    func getMoney() -> Int {
+        return money
     }
 }
 
