@@ -13,6 +13,10 @@ class VendingMachine {
         case invalidation
     }
     
+    enum BuyError: Error {
+        case notEnoughMoney
+    }
+    
     private var totalMoney: Int = 0
     
     func insertMoney(_ input: Int) throws {
@@ -28,6 +32,17 @@ class VendingMachine {
     
     func getTotalMoney() -> Int {
         return totalMoney
+    }
+    
+    func getDrink(_ input: Int) throws {
+        if input > totalMoney {
+            throw BuyError.notEnoughMoney
+        }
+        totalMoney -= input
+    }
+    
+    func getChangeCoinCount() -> Int {
+        return 2
     }
 }
 
