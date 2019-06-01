@@ -41,15 +41,6 @@ class VendingMachine {
         totalMoney -= input
     }
     
-    func getChangeCoinCount() -> Int {
-        var totalCoinCount: Int = 0
-        totalCoinCount += calculateCointCount(500)
-        totalCoinCount += calculateCointCount(100)
-        totalCoinCount += calculateCointCount(50)
-        totalCoinCount += calculateCointCount(10)
-        return totalCoinCount
-    }
-    
     private func calculateCointCount(_ base: Int) -> Int {
         var totalCoinCount: Int = 0
         if totalMoney / base > 0 {
@@ -59,20 +50,8 @@ class VendingMachine {
         return totalCoinCount
     }
     
-    func get500() -> Int {
-        return calculateCointCount(500)
-    }
-    
-    func get100() -> Int {
-        return calculateCointCount(100)
-    }
-    
-    func get50() -> Int {
-        return calculateCointCount(50)
-    }
-    
-    func get10() -> Int {
-        return calculateCointCount(10)
+    func getCoinsCount(_ unit: Int) -> Int {
+        return calculateCointCount(unit)
     }
 }
 
@@ -99,32 +78,15 @@ class VendingMachineTDDTests: XCTestCase {
         XCTAssertEqual(vendingMachine.getTotalMoney(), 700)
     }
     
-    func testChangeCoinCount1() {
-        XCTAssertNoThrow(try vendingMachine.insertMoney(500))
-        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
-        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
-        XCTAssertNoThrow(try vendingMachine.getDrink(500))
-        XCTAssertEqual(vendingMachine.getChangeCoinCount(), 2)
-        XCTAssertNoThrow(try vendingMachine.getDrink(100))
-    }
-    
-    func testChangeCoinCount2() {
-        XCTAssertNoThrow(try vendingMachine.insertMoney(500))
-        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
-        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
-        XCTAssertNoThrow(try vendingMachine.getDrink(350))
-        XCTAssertEqual(vendingMachine.getChangeCoinCount(), 4)
-    }
-    
     func testChangeCoinCountPerUnit() {
         XCTAssertNoThrow(try vendingMachine.insertMoney(500))
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
         XCTAssertNoThrow(try vendingMachine.getDrink(350))
         
-        XCTAssertEqual(vendingMachine.get500(), 0)
-        XCTAssertEqual(vendingMachine.get100(), 3)
-        XCTAssertEqual(vendingMachine.get50(), 1)
-        XCTAssertEqual(vendingMachine.get10(), 0)
+        XCTAssertEqual(vendingMachine.getCoinsCount(500), 0)
+        XCTAssertEqual(vendingMachine.getCoinsCount(100), 3)
+        XCTAssertEqual(vendingMachine.getCoinsCount(50), 1)
+        XCTAssertEqual(vendingMachine.getCoinsCount(10), 0)
     }
 }
