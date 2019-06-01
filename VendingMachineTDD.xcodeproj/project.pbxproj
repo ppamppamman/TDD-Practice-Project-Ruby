@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		713A3BCF22A2073E004B5EB4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713A3BCE22A2073E004B5EB4 /* main.swift */; };
+		713A3BDC22A20752004B5EB4 /* VendingMachineTDDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713A3BDB22A20752004B5EB4 /* VendingMachineTDDTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +26,20 @@
 /* Begin PBXFileReference section */
 		713A3BCB22A2073E004B5EB4 /* VendingMachineTDD */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VendingMachineTDD; sourceTree = BUILT_PRODUCTS_DIR; };
 		713A3BCE22A2073E004B5EB4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		713A3BD922A20752004B5EB4 /* VendingMachineTDDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VendingMachineTDDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		713A3BDB22A20752004B5EB4 /* VendingMachineTDDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VendingMachineTDDTests.swift; sourceTree = "<group>"; };
+		713A3BDD22A20752004B5EB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		713A3BC822A2073E004B5EB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		713A3BD622A20752004B5EB4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				713A3BCD22A2073E004B5EB4 /* VendingMachineTDD */,
+				713A3BDA22A20752004B5EB4 /* VendingMachineTDDTests */,
 				713A3BCC22A2073E004B5EB4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				713A3BCB22A2073E004B5EB4 /* VendingMachineTDD */,
+				713A3BD922A20752004B5EB4 /* VendingMachineTDDTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +73,15 @@
 				713A3BCE22A2073E004B5EB4 /* main.swift */,
 			);
 			path = VendingMachineTDD;
+			sourceTree = "<group>";
+		};
+		713A3BDA22A20752004B5EB4 /* VendingMachineTDDTests */ = {
+			isa = PBXGroup;
+			children = (
+				713A3BDB22A20752004B5EB4 /* VendingMachineTDDTests.swift */,
+				713A3BDD22A20752004B5EB4 /* Info.plist */,
+			);
+			path = VendingMachineTDDTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +104,23 @@
 			productReference = 713A3BCB22A2073E004B5EB4 /* VendingMachineTDD */;
 			productType = "com.apple.product-type.tool";
 		};
+		713A3BD822A20752004B5EB4 /* VendingMachineTDDTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 713A3BDE22A20752004B5EB4 /* Build configuration list for PBXNativeTarget "VendingMachineTDDTests" */;
+			buildPhases = (
+				713A3BD522A20752004B5EB4 /* Sources */,
+				713A3BD622A20752004B5EB4 /* Frameworks */,
+				713A3BD722A20752004B5EB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VendingMachineTDDTests;
+			productName = VendingMachineTDDTests;
+			productReference = 713A3BD922A20752004B5EB4 /* VendingMachineTDDTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +132,9 @@
 				ORGANIZATIONNAME = jamie;
 				TargetAttributes = {
 					713A3BCA22A2073E004B5EB4 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					713A3BD822A20752004B5EB4 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
 				};
@@ -110,9 +152,20 @@
 			projectRoot = "";
 			targets = (
 				713A3BCA22A2073E004B5EB4 /* VendingMachineTDD */,
+				713A3BD822A20752004B5EB4 /* VendingMachineTDDTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		713A3BD722A20752004B5EB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		713A3BC722A2073E004B5EB4 /* Sources */ = {
@@ -120,6 +173,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				713A3BCF22A2073E004B5EB4 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		713A3BD522A20752004B5EB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				713A3BDC22A20752004B5EB4 /* VendingMachineTDDTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +322,42 @@
 			};
 			name = Release;
 		};
+		713A3BDF22A20752004B5EB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = H899557VXN;
+				INFOPLIST_FILE = VendingMachineTDDTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.VendingMachineTDDTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		713A3BE022A20752004B5EB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = H899557VXN;
+				INFOPLIST_FILE = VendingMachineTDDTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dev.VendingMachineTDDTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -278,6 +375,15 @@
 			buildConfigurations = (
 				713A3BD322A2073E004B5EB4 /* Debug */,
 				713A3BD422A2073E004B5EB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		713A3BDE22A20752004B5EB4 /* Build configuration list for PBXNativeTarget "VendingMachineTDDTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				713A3BDF22A20752004B5EB4 /* Debug */,
+				713A3BE022A20752004B5EB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
