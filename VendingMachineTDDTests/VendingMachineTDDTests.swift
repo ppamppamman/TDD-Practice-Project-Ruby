@@ -39,4 +39,12 @@ class VendingMachineTDDTests: XCTestCase {
         let vendingMachine = VendingMachine()
         XCTAssertNoThrow(try vendingMachine.insertMoney(500))
     }
+    
+    func testInsertTotalMoney() {
+        let vendingMachine = VendingMachine()
+        XCTAssertNoThrow(try vendingMachine.insertMoney(500))
+        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
+        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
+        XCTAssertEqual(vendingMachine.getMoney(), 700)
+    }
 }
