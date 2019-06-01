@@ -58,6 +58,22 @@ class VendingMachine {
         }
         return totalCoinCount
     }
+    
+    func get500() -> Int {
+        return calculateCointCount(500)
+    }
+    
+    func get100() -> Int {
+        return calculateCointCount(100)
+    }
+    
+    func get50() -> Int {
+        return calculateCointCount(50)
+    }
+    
+    func get10() -> Int {
+        return calculateCointCount(10)
+    }
 }
 
 class VendingMachineTDDTests: XCTestCase {
