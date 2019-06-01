@@ -13,11 +13,11 @@ class VendingMachine {
         case invalidation
     }
     
-    private var money: Int = 0
+    private var totalMoney: Int = 0
     
     func insertMoney(_ input: Int) throws {
         try validateInsertMoney(input)
-        money += input
+        totalMoney += input
     }
     
     func validateInsertMoney(_ input: Int) throws {
@@ -26,13 +26,14 @@ class VendingMachine {
         }
     }
     
-    func getMoney() -> Int {
-        return money
+    func getTotalMoney() -> Int {
+        return totalMoney
     }
 }
 
 class VendingMachineTDDTests: XCTestCase {
-
+    private let vendingMachine = VendingMachine()
+    
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -43,15 +44,13 @@ class VendingMachineTDDTests: XCTestCase {
 
     func testInsertMoneyValidation() {
         // 1000원까지 넣을 수 있음 10 50 100 500 1000
-        let vendingMachine = VendingMachine()
         XCTAssertNoThrow(try vendingMachine.insertMoney(500))
     }
     
     func testInsertTotalMoney() {
-        let vendingMachine = VendingMachine()
         XCTAssertNoThrow(try vendingMachine.insertMoney(500))
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
-        XCTAssertEqual(vendingMachine.getMoney(), 700)
+        XCTAssertEqual(vendingMachine.getTotalMoney(), 700)
     }
 }
