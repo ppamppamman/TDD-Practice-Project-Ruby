@@ -42,7 +42,21 @@ class VendingMachine {
     }
     
     func getChangeCoinCount() -> Int {
-        return 2
+        var totalCoinCount: Int = 0
+        totalCoinCount += calculateCointCount(500)
+        totalCoinCount += calculateCointCount(100)
+        totalCoinCount += calculateCointCount(50)
+        totalCoinCount += calculateCointCount(10)
+        return totalCoinCount
+    }
+    
+    private func calculateCointCount(_ base: Int) -> Int {
+        var totalCoinCount: Int = 0
+        if totalMoney / base > 0 {
+            totalCoinCount += Int(totalMoney / base)
+            totalMoney -= (Int(totalMoney / base) * base)
+        }
+        return totalCoinCount
     }
 }
 
@@ -69,11 +83,20 @@ class VendingMachineTDDTests: XCTestCase {
         XCTAssertEqual(vendingMachine.getTotalMoney(), 700)
     }
     
-    func testChangeCoinCount() {
+    func testChangeCoinCount1() {
         XCTAssertNoThrow(try vendingMachine.insertMoney(500))
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
         XCTAssertNoThrow(try vendingMachine.getDrink(500))
         XCTAssertEqual(vendingMachine.getChangeCoinCount(), 2)
+        XCTAssertNoThrow(try vendingMachine.getDrink(100))
+    }
+    
+    func testChangeCoinCount2() {
+        XCTAssertNoThrow(try vendingMachine.insertMoney(500))
+        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
+        XCTAssertNoThrow(try vendingMachine.insertMoney(100))
+        XCTAssertNoThrow(try vendingMachine.getDrink(350))
+        XCTAssertEqual(vendingMachine.getChangeCoinCount(), 4)
     }
 }
