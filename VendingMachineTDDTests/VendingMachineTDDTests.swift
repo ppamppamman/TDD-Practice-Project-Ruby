@@ -8,6 +8,27 @@
 
 import XCTest
 
+struct Coin {
+    enum Unit: Int {
+        case unit10 = 10
+        case unit50 = 50
+        case unit100 = 100
+        case unit500 = 500
+        case unit1000 = 1000
+    }
+    
+    private let unit: Unit
+    
+    var value: Int {
+        return unit.rawValue
+    }
+    
+    init?(value: Int) {
+        guard let unit = Unit(rawValue: value) else { return nil }
+        self.unit = unit
+    }
+}
+
 class VendingMachine {
     enum InsertError: Error {
         case invalidation
@@ -20,14 +41,8 @@ class VendingMachine {
     private var totalMoney: Int = 0
     
     func insertMoney(_ input: Int) throws {
-        try validateInsertMoney(input)
-        totalMoney += input
-    }
-    
-    func validateInsertMoney(_ input: Int) throws {
-        if !(input == 10 || input == 50 || input == 100 || input == 500 || input == 1000) {
-            throw InsertError.invalidation
-        }
+        guard let coin = Coin(value: input) else { throw InsertError.invalidation }
+        totalMoney += coin.value
     }
     
     func getTotalMoney() -> Int {
@@ -41,16 +56,16 @@ class VendingMachine {
         totalMoney -= input
     }
     
-    private func calculateCointCount(_ base: Int) -> Int {
+    private func calculateCointCount(_ unit: Coin.Unit) -> Int {
         var totalCoinCount: Int = 0
-        if totalMoney / base > 0 {
-            totalCoinCount += Int(totalMoney / base)
-            totalMoney -= (Int(totalMoney / base) * base)
+        if totalMoney / unit.rawValue > 0 {
+            totalCoinCount += Int(totalMoney / unit.rawValue)
+            totalMoney -= (Int(totalMoney / unit.rawValue) * unit.rawValue)
         }
         return totalCoinCount
     }
     
-    func getCoinsCount(_ unit: Int) -> Int {
+    func getCoinsCount(_ unit: Coin.Unit) -> Int {
         return calculateCointCount(unit)
     }
 }
@@ -84,9 +99,9 @@ class VendingMachineTDDTests: XCTestCase {
         XCTAssertNoThrow(try vendingMachine.insertMoney(100))
         XCTAssertNoThrow(try vendingMachine.getDrink(350))
         
-        XCTAssertEqual(vendingMachine.getCoinsCount(500), 0)
-        XCTAssertEqual(vendingMachine.getCoinsCount(100), 3)
-        XCTAssertEqual(vendingMachine.getCoinsCount(50), 1)
-        XCTAssertEqual(vendingMachine.getCoinsCount(10), 0)
+        XCTAssertEqual(vendingMachine.getCoinsCount(.unit500), 0)
+        XCTAssertEqual(vendingMachine.getCoinsCount(.unit100), 3)
+        XCTAssertEqual(vendingMachine.getCoinsCount(.unit50), 1)
+        XCTAssertEqual(vendingMachine.getCoinsCount(.unit10), 0)
     }
 }
