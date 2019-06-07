@@ -8,24 +8,54 @@
 
 import XCTest
 
-struct Coin {
-    enum Unit: Int {
-        case unit10 = 10
-        case unit50 = 50
-        case unit100 = 100
-        case unit500 = 500
-        case unit1000 = 1000
-    }
-    
-    private let unit: Unit
+enum Coin: Int, CaseIterable {
+    case unit500 = 500
+    case unit100 = 100
+    case unit50 = 50
+    case unit10 = 10
     
     var value: Int {
-        return unit.rawValue
+        return self.rawValue
+    }
+}
+
+class CoinBundle {
+    private var coins: [Coin] = []
+    
+    var totalMoney: Int {
+        return coins.map { $0.value }.reduce(0) { $0 + $1 }
     }
     
-    init?(value: Int) {
-        guard let unit = Unit(rawValue: value) else { return nil }
-        self.unit = unit
+    func add(_ coin: Coin) {
+        coins.append(coin)
+    }
+    
+    func remove(_ money: Int) {
+        let remain = totalMoney - money
+        coins = convert(money: remain)
+    }
+    
+    private func convert(money: Int) -> [Coin] {
+        var money = money
+        var newCoins: [Coin] = []
+        
+        Coin.allCases.sorted(by: {$0.value > $1.value}).forEach {
+            let convertedCoins = convert(money: money, by: $0)
+            money -= ($0.value * convertedCoins.count)
+            newCoins += convertedCoins
+        }
+        
+        return newCoins
+    }
+    
+    private func convert(money: Int, by coin: Coin) -> [Coin] {
+        guard money / coin.value > 0 else { return [] }
+        let count = money / coin.value
+        return Array(repeating: coin, count: count)
+    }
+    
+    func getCoinCount(of coin: Coin) -> Int {
+        return coins.filter { $0 == coin }.count
     }
 }
 
@@ -38,35 +68,26 @@ class VendingMachine {
         case notEnoughMoney
     }
     
-    private var totalMoney: Int = 0
+    private var coinBundle = CoinBundle()
     
     func insertMoney(_ input: Int) throws {
-        guard let coin = Coin(value: input) else { throw InsertError.invalidation }
-        totalMoney += coin.value
+        guard let coin = Coin(rawValue: input) else { throw InsertError.invalidation }
+        coinBundle.add(coin)
     }
     
     func getTotalMoney() -> Int {
-        return totalMoney
+        return coinBundle.totalMoney
     }
     
     func getDrink(_ input: Int) throws {
-        if input > totalMoney {
+        if input > coinBundle.totalMoney {
             throw BuyError.notEnoughMoney
         }
-        totalMoney -= input
+        coinBundle.remove(input)
     }
     
-    private func calculateCointCount(_ unit: Coin.Unit) -> Int {
-        var totalCoinCount: Int = 0
-        if totalMoney / unit.rawValue > 0 {
-            totalCoinCount += Int(totalMoney / unit.rawValue)
-            totalMoney -= (Int(totalMoney / unit.rawValue) * unit.rawValue)
-        }
-        return totalCoinCount
-    }
-    
-    func getCoinsCount(_ unit: Coin.Unit) -> Int {
-        return calculateCointCount(unit)
+    func getCoinsCount(_ coin: Coin) -> Int {
+        return coinBundle.getCoinCount(of: coin)
     }
 }
 
