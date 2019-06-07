@@ -32,10 +32,29 @@ module.exports = class VM {
     if (price > this.amount) return "잔액이 부족합니다.";
     this.amount -= price;
     if (this.getAvailableDrinks().length === 0) {
-      const returnedMoney = this.amount;
-      this.amount = 0;
-      return `${drink}\n${returnedMoney}원을 반환합니다.\n${this.getCurrentStatus()}`;
+      return `${drink}\n${this.exchange()}\n${this.getCurrentStatus()}`;
     }
     return `${drink}\n${this.getCurrentStatus()}`;
+  }
+  exchange() {
+    let moneyMsg = []
+    const exCount = [
+      { value: 1000,  count: 0 },
+      { value: 500,   count: 0 },
+      { value: 100,   count: 0 },
+      { value: 50,    count: 0 }, 
+      { value: 10,    count: 0 },
+    ]
+    for (let object of exCount) {
+      object.count = parseInt(this.amount / object.value);
+      this.amount = this.amount % object.value;
+      if (object.count) {
+        moneyMsg.push(`${object.value}원 ${object.count}개`)
+      }
+    }
+    let resultMessage = moneyMsg.reduce((acc, cur) => acc + ', ' +cur);
+    resultMessage += '를 반환합니다.'
+
+    return resultMessage;
   }
 };
