@@ -1,0 +1,14 @@
+{
+  "name": "chapter27",
+  "version": "1.0.0",
+  "description": "chapter27 testing pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/*.spec.js"
+  },
+  "author": "Nailer",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6"
+  }
+}
