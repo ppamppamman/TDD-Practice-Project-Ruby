@@ -47,4 +47,10 @@ class LibraryTDDTests: XCTestCase {
         XCTAssertTrue(library.isExistBookHaveTitle("테스트 주도 개발"))
         XCTAssertFalse(library.isExistBookHaveTitle("책"))
     }
+    
+    func testIsOnLoan() {
+        // 책 대출 여부 확인
+        let oneBook = library.getBook()
+        XCTAssertTrue(oneBook.isLoan())
+    }
 }
