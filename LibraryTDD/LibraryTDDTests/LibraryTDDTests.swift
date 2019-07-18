@@ -8,6 +8,17 @@
 
 import XCTest
 
+class Book {
+    private var title: String = ""
+    init(_ title: String) {
+        self.title = title
+    }
+    
+    func isExist() -> Bool {
+        return true
+    }
+}
+
 class LibraryTDDTests: XCTestCase {
 
     override func setUp() {
