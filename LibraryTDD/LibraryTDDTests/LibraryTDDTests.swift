@@ -17,4 +17,9 @@ class LibraryTDDTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+    func testSearchBookInfo() {
+        let book = Book("테스트 주도 개발")
+        XCTAssertTrue(book.isExist())
+    }
 }
