@@ -58,4 +58,9 @@ class LibraryTDDTests: XCTestCase {
         let oneBook = library.getBook(title: "테스트 주도 개발")
         XCTAssertEqual(false, oneBook.isLoan)
     }
+    
+    func testLoanTheBook() {
+        let oneBook = library.getBook(title: "여행의 이유")
+        XCTAssertNoThrow(oneBook.loan())
+    }
 }
