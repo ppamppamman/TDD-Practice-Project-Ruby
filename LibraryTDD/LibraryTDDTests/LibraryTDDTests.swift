@@ -9,10 +9,22 @@
 import XCTest
 
 struct Book {
-    let title: String
-    let author: String
-    let publisher: String
-    let isLoan: Bool
+    var title: String
+    var author: String
+    var publisher: String
+    var isLoan: Bool
+    
+    enum LoanError: Error {
+        case loanError
+    }
+    
+    mutating func loan() throws {
+        guard !isLoan else {
+            throw LoanError.loanError
+        }
+        
+        self.isLoan = true
+    }
 }
 
 class Library {
@@ -60,7 +72,10 @@ class LibraryTDDTests: XCTestCase {
     }
     
     func testLoanTheBook() {
-        let oneBook = library.getBook(title: "여행의 이유")
-        XCTAssertNoThrow(oneBook.loan())
+        var bookToLoan = library.getBook(title: "여행의 이유")
+        XCTAssertThrowsError(try bookToLoan.loan())
+        
+        var bookToLoan2 = library.getBook(title: "테스트 주도 개발")
+        XCTAssertNoThrow(try bookToLoan2.loan())
     }
 }
