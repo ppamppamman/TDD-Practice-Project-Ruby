@@ -13,9 +13,11 @@ struct Book {
     var author: String
     var publisher: String
     var isLoan: Bool
+    var resvCount: Int
     
     enum LoanError: Error {
         case loanError
+        case resvFullError
     }
     
     mutating func loan() throws {
@@ -25,18 +27,24 @@ struct Book {
         
         self.isLoan = true
     }
+    
+    mutating func reservation() throws {
+        guard resvCount != 5 else {
+            throw LoanError.resvFullError
+        }
+    }
 }
 
 class Library {
     private var books: [Book] = []
     
     init() {
-        books.append(Book(title: "테스트 주도 개발", author: "켄트 벡", publisher: "인사이트(insight)", isLoan: false))
-        books.append(Book(title: "여행의 이유", author: "김영하", publisher: "문학동네", isLoan: true))
-        books.append(Book(title: "설민석의 삼국지 ", author: "설민석", publisher: "세계사", isLoan: false))
-        books.append(Book(title: "아주 작은 습관의 힘", author: "제임스 클리어", publisher: "비즈니스북스", isLoan: true))
-        books.append(Book(title: "죽음 1", author: "베르나르 베르베르", publisher: "열린책들", isLoan: false))
-        books.append(Book(title: "Go Go 카카오프렌즈 9", author: "김미영", publisher: "아울북", isLoan: true))
+        books.append(Book(title: "테스트 주도 개발", author: "켄트 벡", publisher: "인사이트(insight)", isLoan: false, resvCount: 5))
+        books.append(Book(title: "여행의 이유", author: "김영하", publisher: "문학동네", isLoan: true, resvCount: 3))
+        books.append(Book(title: "설민석의 삼국지 ", author: "설민석", publisher: "세계사", isLoan: false, resvCount: 0))
+        books.append(Book(title: "아주 작은 습관의 힘", author: "제임스 클리어", publisher: "비즈니스북스", isLoan: true, resvCount: 4))
+        books.append(Book(title: "죽음 1", author: "베르나르 베르베르", publisher: "열린책들", isLoan: false, resvCount: 0))
+        books.append(Book(title: "Go Go 카카오프렌즈 9", author: "김미영", publisher: "아울북", isLoan: true, resvCount: 0))
     }
     
     func isExistBookHaveTitle(_ title: String) -> Bool {
@@ -81,6 +89,6 @@ class LibraryTDDTests: XCTestCase {
     
     func testReservationTheBook() {
         var bookToResv = library.getBook(title: "테스트 주도 개발")
-        XCTAssertThrowsError(bookToResv.resv())
+        XCTAssertThrowsError(try bookToResv.reservation())
     }
 }
