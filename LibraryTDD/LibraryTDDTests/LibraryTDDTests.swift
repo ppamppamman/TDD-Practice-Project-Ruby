@@ -17,6 +17,10 @@ struct Book {
     
     enum LoanError: Error {
         case loanError
+        case notLoanError
+    }
+    
+    enum ResvError: Error {
         case resvFullError
     }
     
@@ -29,9 +33,14 @@ struct Book {
     }
     
     mutating func reservation() throws {
-        guard resvCount != 5 else {
-            throw LoanError.resvFullError
+        guard isLoan else {
+            throw LoanError.notLoanError
         }
+        guard resvCount != 5 else {
+            throw ResvError.resvFullError
+        }
+        
+        resvCount += 1
     }
 }
 
@@ -39,9 +48,9 @@ class Library {
     private var books: [Book] = []
     
     init() {
-        books.append(Book(title: "테스트 주도 개발", author: "켄트 벡", publisher: "인사이트(insight)", isLoan: false, resvCount: 5))
+        books.append(Book(title: "테스트 주도 개발", author: "켄트 벡", publisher: "인사이트(insight)", isLoan: true, resvCount: 5))
         books.append(Book(title: "여행의 이유", author: "김영하", publisher: "문학동네", isLoan: true, resvCount: 3))
-        books.append(Book(title: "설민석의 삼국지 ", author: "설민석", publisher: "세계사", isLoan: false, resvCount: 0))
+        books.append(Book(title: "설민석의 삼국지", author: "설민석", publisher: "세계사", isLoan: false, resvCount: 0))
         books.append(Book(title: "아주 작은 습관의 힘", author: "제임스 클리어", publisher: "비즈니스북스", isLoan: true, resvCount: 4))
         books.append(Book(title: "죽음 1", author: "베르나르 베르베르", publisher: "열린책들", isLoan: false, resvCount: 0))
         books.append(Book(title: "Go Go 카카오프렌즈 9", author: "김미영", publisher: "아울북", isLoan: true, resvCount: 0))
@@ -88,7 +97,18 @@ class LibraryTDDTests: XCTestCase {
     }
     
     func testReservationTheBook() {
+        // 예약 full
         var bookToResv = library.getBook(title: "테스트 주도 개발")
         XCTAssertThrowsError(try bookToResv.reservation())
+        
+        // 미대출 도서
+        var bookToResv2 = library.getBook(title: "설민석의 삼국지")
+        XCTAssertThrowsError(try bookToResv2.reservation())
+        
+        // 예약 후 추가 예약
+        var resvFullTest = library.getBook(title: "아주 작은 습관의 힘")
+        XCTAssertNoThrow(try resvFullTest.reservation())
+        // 예약 수가 5건이므로 full resv error
+        XCTAssertThrowsError(try resvFullTest.reservation())
     }
 }
