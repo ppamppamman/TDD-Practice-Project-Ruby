@@ -78,4 +78,9 @@ class LibraryTDDTests: XCTestCase {
         var bookToLoan2 = library.getBook(title: "테스트 주도 개발")
         XCTAssertNoThrow(try bookToLoan2.loan())
     }
+    
+    func testReservationTheBook() {
+        var bookToResv = library.getBook(title: "테스트 주도 개발")
+        XCTAssertThrowsError(bookToResv.resv())
+    }
 }
