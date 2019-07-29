@@ -111,4 +111,10 @@ class LibraryTDDTests: XCTestCase {
         // 예약 수가 5건이므로 full resv error
         XCTAssertThrowsError(try resvFullTest.reservation())
     }
+    
+    func testReturnLoanBook() {
+        // 책 반납
+        var willReturnBook = library.getBook(title: "테스트 주도 개발")
+        XCTAssertNoThrowsError(try willReturnBook.return())
+    }
 }
