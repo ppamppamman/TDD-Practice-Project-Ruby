@@ -24,6 +24,10 @@ struct Book {
         case resvFullError
     }
     
+    enum ReturnError: Error {
+        case notLoanError
+    }
+    
     mutating func loan() throws {
         guard !isLoan else {
             throw LoanError.loanError
@@ -41,6 +45,14 @@ struct Book {
         }
         
         resvCount += 1
+    }
+    
+    mutating func returnBook() throws {
+        guard isLoan else {
+            throw ReturnError.notLoanError
+        }
+        
+        self.isLoan = false
     }
 }
 
@@ -115,6 +127,6 @@ class LibraryTDDTests: XCTestCase {
     func testReturnLoanBook() {
         // 책 반납
         var willReturnBook = library.getBook(title: "테스트 주도 개발")
-        XCTAssertNoThrowsError(try willReturnBook.return())
+        XCTAssertNoThrow(try willReturnBook.returnBook())
     }
 }
