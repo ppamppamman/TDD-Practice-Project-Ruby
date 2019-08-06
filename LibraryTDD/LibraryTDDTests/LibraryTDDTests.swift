@@ -129,4 +129,13 @@ class LibraryTDDTests: XCTestCase {
         var willReturnBook = library.getBook(title: "테스트 주도 개발")
         XCTAssertNoThrow(try willReturnBook.returnBook())
     }
+    
+    func testAutoReturnToLoanBook() {
+        // 자동 반납 테스트
+        var willReturnBook = library.getBook(title: "테스트 주도 개발")
+        // 대출일로 5일째되면 자동 반납된다
+        // 흐음... 일단 대출하면 대출일과 반납일 저장
+        // 오늘이 반납일이면 반납
+        XCTAssertTrue(willReturnBook.returnDay == "2019-08-06")
+    }
 }
