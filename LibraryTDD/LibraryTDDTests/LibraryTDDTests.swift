@@ -87,6 +87,10 @@ class Library {
     func getBook(title: String) -> Book {
         return books.filter { $0.title.contains(title) }.first!
     }
+    
+    func autoReturnToLoanBooks() throws {
+        
+    }
 }
 
 class LibraryTDDTests: XCTestCase {
