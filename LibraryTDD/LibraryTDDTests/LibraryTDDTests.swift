@@ -147,5 +147,7 @@ class LibraryTDDTests: XCTestCase {
         let willReturnBook = library.getBook(title: "테스트 주도 개발")
         // 책 한권에 대한 반납일 체크
         XCTAssertTrue(willReturnBook.checkToReturnState())
+        // 전체 책 반납일 체크 및 반납
+        XCTAssertNoThrow(try library.autoReturnToLoanBooks())
     }
 }
