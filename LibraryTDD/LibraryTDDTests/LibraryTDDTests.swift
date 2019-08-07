@@ -54,6 +54,7 @@ struct Book {
         }
         
         self.isLoan = false
+        self.returnDay = nil
     }
     
     func checkToReturnState() -> Bool {
@@ -61,10 +62,14 @@ struct Book {
             return false
         }
         
+        guard let returnDay = returnDay else {
+            return false
+        }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: Date())
-        return today == dateFormatter.string(from: returnDay!)
+        return today == dateFormatter.string(from: returnDay)
     }
 }
 
@@ -89,7 +94,10 @@ class Library {
     }
     
     func autoReturnToLoanBooks() throws {
-        
+        try books.filter { $0.checkToReturnState() }.forEach {
+            var book = $0
+            try book.returnBook()
+        }
     }
 }
 
